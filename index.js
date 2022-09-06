@@ -4,7 +4,12 @@ const axios = require('axios')
 
 const apiGet = async ({ path }) => {
   const apiUrl = 'https://api.netlify.com/api/v1/'
-  const response = await axios.get(new URL(path, apiUrl).toString())
+  const response = await axios.get(new URL(path, apiUrl).toString(), {
+    headers: {
+      'User-Agent': "MyApp " + core.getInput('netlifyEmail'),
+      'Authorization': "Bearer " + core.getInput('netlifyAccessToken')
+    }
+  })
   return response.data
 }
 
